@@ -1,0 +1,259 @@
+---
+import { SITE_CONFIG } from '@/config';
+---
+
+<header class="header">
+  <nav class="nav container">
+    <a href="/" class="logo">
+      <span class="logo-text text-gradient">{SITE_CONFIG.name}</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#portfolio">Portfolio</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/booking">Book a Call</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <a href="/#contact" class="btn btn-primary">Get Started</a>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    gap: 2rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    text-decoration: none;
+  }
+
+  .logo-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color var(--transition-fast);
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width var(--transition-base);
+  }
+
+  .nav-links a:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    border: none;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-bg-alt);
+    transform: scale(1.05);
+  }
+
+  .sun-icon,
+  .moon-icon {
+    position: absolute;
+    transition: all var(--transition-base);
+  }
+
+  [data-theme="light"] .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+
+  [data-theme="dark"] .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg);
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .mobile-menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: all var(--transition-base);
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 0 var(--spacing-md);
+    }
+
+    .nav {
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 2rem var(--spacing-md);
+      gap: 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all var(--transition-base);
+    }
+
+    .nav-links.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+
+    .btn-primary {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header {
+      padding: 0 1rem;
+    }
+
+    .nav {
+      height: 65px;
+    }
+
+    .logo {
+      font-size: 1.125rem;
+    }
+
+    .nav-links {
+      top: 65px;
+      padding: 1.5rem 1rem;
+    }
+  }
+</style>
+
+<script>
+  function initMobileMenu() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.nav-links');
+
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+      });
+    }
+  }
+
+  initMobileMenu();
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>

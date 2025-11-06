@@ -1,0 +1,109 @@
+---
+import '@/styles/design-system.css';
+import { SITE_CONFIG } from '@/config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = SITE_CONFIG.name,
+  description = SITE_CONFIG.description,
+  image = '/og-image.jpg'
+} = Astro.props;
+
+const pageTitle = title === SITE_CONFIG.name ? title : `${title} | ${SITE_CONFIG.name}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Inline critical theme script -->
+    <script is:inline>
+      // Prevent flash of unstyled content
+      const theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <!-- Theme toggle script -->
+    <script>
+      function initTheme() {
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+
+        if (themeToggle) {
+          themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+          });
+        }
+      }
+
+      // Run on initial load
+      initTheme();
+
+      // Re-run after view transitions
+      document.addEventListener('astro:page-load', initTheme);
+    </script>
+
+    <!-- Intersection Observer for scroll animations -->
+    <script>
+      function initScrollAnimations() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        document.querySelectorAll('[data-animate]').forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      initScrollAnimations();
+      document.addEventListener('astro:page-load', initScrollAnimations);
+    </script>
+  </body>
+</html>

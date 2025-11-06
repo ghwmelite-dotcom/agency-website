@@ -1,0 +1,239 @@
+---
+const projects = [
+  {
+    title: "E-Commerce Platform",
+    category: "Web Development",
+    description: "Modern online store with headless CMS and 300% conversion increase",
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&auto=format&fit=crop",
+    tags: ["React", "Node.js", "Stripe"],
+    link: "/portfolio/ecommerce"
+  },
+  {
+    title: "SaaS Dashboard",
+    category: "UI/UX Design",
+    description: "Enterprise analytics platform serving 50K+ daily users",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop",
+    tags: ["Figma", "React", "TypeScript"],
+    link: "/portfolio/saas"
+  },
+  {
+    title: "Brand Identity",
+    category: "Branding",
+    description: "Complete rebrand for fintech startup raising $10M Series A",
+    image: "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&auto=format&fit=crop",
+    tags: ["Brand Design", "Motion", "Web"],
+    link: "/portfolio/brand"
+  },
+  {
+    title: "Mobile Banking App",
+    category: "Web Development",
+    description: "Secure, lightning-fast banking experience for 100K+ users",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&auto=format&fit=crop",
+    tags: ["React Native", "Security", "UX"],
+    link: "/portfolio/banking"
+  },
+  {
+    title: "AI Content Platform",
+    category: "Full Stack",
+    description: "ML-powered content generation tool used by Fortune 500",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop",
+    tags: ["Python", "AI/ML", "React"],
+    link: "/portfolio/ai"
+  },
+  {
+    title: "Real Estate Portal",
+    category: "Web Development",
+    description: "Property search platform with 3D tours and AR visualization",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop",
+    tags: ["Next.js", "3D", "Maps"],
+    link: "/portfolio/realestate"
+  }
+];
+---
+
+<section id="portfolio" class="section portfolio">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2>Our Work Speaks Volumes</h2>
+      <p class="section-description">
+        Explore our portfolio of successful projects that transformed businesses
+      </p>
+    </div>
+
+    <div class="portfolio-grid">
+      {projects.map((project, index) => (
+        <article class="portfolio-item" data-animate style={`--animation-delay: ${index * 100}ms`}>
+          <a href={project.link} class="portfolio-link">
+            <div class="portfolio-image">
+              <img src={project.image} alt={project.title} loading="lazy" />
+              <div class="portfolio-overlay">
+                <span class="view-project">
+                  View Project
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 17 7 17 17"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <span class="portfolio-category">{project.category}</span>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div class="portfolio-tags">
+                {project.tags.map(tag => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <div class="portfolio-cta" data-animate>
+      <p>Have a project in mind?</p>
+      <a href="/booking" class="btn btn-primary">Let's Talk</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio {
+    background: var(--color-bg);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .portfolio-item {
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .portfolio-item.animate-in {
+    opacity: 1;
+    animation: fade-in 0.6s ease-out forwards;
+    animation-delay: var(--animation-delay, 0ms);
+  }
+
+  .portfolio-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .portfolio-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(236, 72, 153, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .view-project {
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .portfolio-item:hover .portfolio-image img {
+    transform: scale(1.05);
+  }
+
+  .portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+  }
+
+  .portfolio-content {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .portfolio-category {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .portfolio-content p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.95rem;
+  }
+
+  .portfolio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+  }
+
+  .portfolio-cta {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--gradient-card);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-border);
+  }
+
+  .portfolio-cta p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

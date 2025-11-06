@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import HeroDynamic from '@/components/HeroDynamic.astro';
+import Services from '@/components/Services.astro';
+import Portfolio from '@/components/Portfolio.astro';
+import Contact from '@/components/Contact.astro';
+import Footer from '@/components/Footer.astro';
+import Chatbot from '@/components/Chatbot.astro';
+import { SITE_CONFIG } from '@/config';
+---
+
+<BaseLayout title={SITE_CONFIG.name} description={SITE_CONFIG.description}>
+  <Header />
+  <main>
+    <HeroDynamic />
+    <Services />
+    <Portfolio />
+    <Contact />
+  </main>
+  <Footer />
+  <Chatbot />
+</BaseLayout>
+
+<style is:global>
+  main {
+    position: relative;
+  }
+</style>

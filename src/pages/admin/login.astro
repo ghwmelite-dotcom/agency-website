@@ -1,0 +1,240 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Admin Login" description="Admin login portal">
+  <main class="login-page">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h1>Admin Portal</h1>
+          <p>Sign in to manage your site content</p>
+        </div>
+
+        <form class="login-form" id="login-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              autocomplete="username"
+              placeholder="Enter your username"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full">
+            Sign In
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+            </svg>
+          </button>
+
+          <div class="form-status" id="login-status"></div>
+        </form>
+
+        <div class="login-footer">
+          <p>Default credentials: admin / admin123</p>
+          <p class="warning">⚠️ Please change the default password after first login!</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .login-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid var(--color-border);
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .login-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .login-header p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .login-form {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    transition: all var(--transition-fast);
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  .btn-full {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--spacing-md);
+  }
+
+  .form-status {
+    margin-top: var(--spacing-md);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  .form-status.success {
+    display: block;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .form-status.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .login-footer {
+    text-align: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .login-footer p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .login-footer .warning {
+    color: #f59e0b;
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .login-page {
+      padding: 1rem;
+    }
+
+    .login-card {
+      padding: var(--spacing-xl);
+    }
+  }
+</style>
+
+<script>
+  function initLogin() {
+    const form = document.getElementById('login-form') as HTMLFormElement;
+    const status = document.getElementById('login-status') as HTMLDivElement;
+
+    if (!form || !status) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = {
+        username: formData.get('username'),
+        password: formData.get('password'),
+      };
+
+      try {
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          status.className = 'form-status success';
+          status.textContent = 'Login successful! Redirecting...';
+          
+          // Store auth token
+          localStorage.setItem('admin_token', result.token);
+          
+          // Redirect to admin dashboard
+          setTimeout(() => {
+            window.location.href = '/admin/dashboard';
+          }, 1000);
+        } else {
+          status.className = 'form-status error';
+          status.textContent = result.error || 'Invalid credentials. Please try again.';
+        }
+      } catch (error) {
+        status.className = 'form-status error';
+        status.textContent = 'Connection error. Please try again.';
+      }
+    });
+  }
+
+  initLogin();
+</script>
+

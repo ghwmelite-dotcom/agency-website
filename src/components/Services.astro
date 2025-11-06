@@ -1,0 +1,184 @@
+---
+import { SITE_CONFIG } from '@/config';
+
+const iconMap: Record<string, string> = {
+  code: 'M16 18l2 2 4-4M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z',
+  palette: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01',
+  sparkles: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
+  chart: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
+  cloud: 'M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z',
+  lightbulb: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+};
+---
+
+<section id="services" class="section services">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2>What We Do Best</h2>
+      <p class="section-description">
+        Comprehensive digital solutions tailored to your business needs
+      </p>
+    </div>
+
+    <div class="services-grid">
+      {SITE_CONFIG.services.map((service, index) => (
+        <div class="service-card card" data-animate style={`--animation-delay: ${index * 100}ms`}>
+          <div class="service-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d={iconMap[service.icon]} />
+            </svg>
+          </div>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+          <a href={`/services/${service.title.toLowerCase().replace(/\s/g, '-')}`} class="service-link">
+            Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <div class="features-section" data-animate>
+      <h3>Why Choose Us?</h3>
+      <div class="features-grid">
+        {SITE_CONFIG.features.map((feature) => (
+          <div class="feature-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>{feature}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-bg-alt);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-3xl);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .section-description {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-3xl);
+  }
+
+  .service-card {
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+    opacity: 0;
+  }
+
+  .service-card.animate-in {
+    opacity: 1;
+    animation: fade-in 0.6s ease-out forwards;
+    animation-delay: var(--animation-delay, 0ms);
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    background: var(--gradient-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+  }
+
+  .service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .service-card p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+    font-size: 1rem;
+  }
+
+  .service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: gap var(--transition-base);
+  }
+
+  .service-link:hover {
+    gap: 0.75rem;
+  }
+
+  .features-section {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-border);
+  }
+
+  .features-section h3 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: var(--spacing-sm);
+    text-align: left;
+  }
+
+  .feature-item svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .feature-item span {
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

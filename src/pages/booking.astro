@@ -1,0 +1,410 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<BaseLayout title="Book a Consultation" description="Schedule a free consultation call with our team">
+  <Header />
+  <main class="booking-page">
+    <div class="container">
+      <div class="booking-header" data-animate>
+        <h1>Book Your Free Consultation</h1>
+        <p>Let's discuss your project and how we can help bring your vision to life</p>
+      </div>
+
+      <div class="booking-grid">
+        <div class="booking-info" data-animate>
+          <div class="info-card glass">
+            <h3>What to Expect</h3>
+            <ul class="checklist">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>30-minute discovery call</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Project scope discussion</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Timeline and budget overview</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Tailored recommendations</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Next steps and action plan</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="info-card glass">
+            <h3>Why Work With Us?</h3>
+            <div class="benefits">
+              <div class="benefit">
+                <span class="benefit-icon">⚡</span>
+                <div>
+                  <h4>Lightning Fast</h4>
+                  <p>We deliver projects on time with exceptional performance</p>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-icon">🎯</span>
+                <div>
+                  <h4>Results Focused</h4>
+                  <p>Every decision is driven by measurable business outcomes</p>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-icon">🤝</span>
+                <div>
+                  <h4>True Partnership</h4>
+                  <p>We're invested in your long-term success</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-calendar" data-animate>
+          <div class="calendar-container glass">
+            <h3>Select a Time</h3>
+
+            <form class="booking-form" id="booking-form">
+              <div class="form-group">
+                <label for="booking-name">Full Name *</label>
+                <input
+                  type="text"
+                  id="booking-name"
+                  name="name"
+                  required
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="booking-email">Email Address *</label>
+                <input
+                  type="email"
+                  id="booking-email"
+                  name="email"
+                  required
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="booking-phone">Phone Number</label>
+                <input
+                  type="tel"
+                  id="booking-phone"
+                  name="phone"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="booking-date">Preferred Date *</label>
+                <input
+                  type="date"
+                  id="booking-date"
+                  name="date"
+                  required
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="booking-time">Preferred Time *</label>
+                <select id="booking-time" name="time" required>
+                  <option value="">Select a time...</option>
+                  <option value="09:00">9:00 AM</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="13:00">1:00 PM</option>
+                  <option value="14:00">2:00 PM</option>
+                  <option value="15:00">3:00 PM</option>
+                  <option value="16:00">4:00 PM</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="booking-message">Tell us about your project *</label>
+                <textarea
+                  id="booking-message"
+                  name="message"
+                  rows="4"
+                  required
+                  placeholder="Brief description of what you need..."
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">
+                Confirm Booking
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </button>
+
+              <div class="form-status" id="booking-status"></div>
+            </form>
+
+            <p class="booking-note">
+              * We'll send you a calendar invite within 1 hour of your booking
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .booking-page {
+    padding-top: calc(var(--header-height) + var(--spacing-3xl));
+    padding-bottom: var(--spacing-3xl);
+    min-height: 100vh;
+  }
+
+  .booking-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-3xl);
+  }
+
+  .booking-header h1 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .booking-header p {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .booking-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .info-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+  }
+
+  .info-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .checklist svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .checklist span {
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+
+  .benefits {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .benefit {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .benefit-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .benefit h4 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+  }
+
+  .benefit p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .calendar-container {
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+  }
+
+  .calendar-container h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .booking-form {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    transition: all var(--transition-fast);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+  }
+
+  .btn-full {
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--spacing-sm);
+  }
+
+  .form-status {
+    margin-top: var(--spacing-md);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  .form-status.success {
+    display: block;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .form-status.error {
+    display: block;
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .booking-note {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .booking-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  function initBookingForm() {
+    const form = document.getElementById('booking-form') as HTMLFormElement;
+    const status = document.getElementById('booking-status') as HTMLDivElement;
+
+    if (!form || !status) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const response = await fetch('/api/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          status.className = 'form-status success';
+          status.textContent = 'Booking confirmed! Check your email for the calendar invite.';
+          form.reset();
+        } else {
+          throw new Error('Failed to book appointment');
+        }
+      } catch (error) {
+        status.className = 'form-status error';
+        status.textContent = 'Oops! Something went wrong. Please try again.';
+      }
+    });
+  }
+
+  initBookingForm();
+  document.addEventListener('astro:page-load', initBookingForm);
+</script>

@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Admin Login" description="Admin login portal">
+<BaseLayout title="Confirm Password Reset" description="Set your new password">
   <main class="login-page">
     <div class="login-background">
       <div class="gradient-orb orb-1"></div>
@@ -15,51 +15,50 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
         <div class="login-header">
           <div class="header-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              <path d="M12 1v6m0 6v6m6-12h-6m-6 0h6"/>
+              <circle cx="12" cy="12" r="10"/>
             </svg>
           </div>
-          <h1>Welcome Back</h1>
-          <p>Sign in to access your admin portal</p>
+          <h1>Set New Password</h1>
+          <p>Enter your reset token and choose a new password</p>
         </div>
 
-        <form class="login-form" id="login-form">
+        <form class="login-form" id="confirm-form">
           <div class="form-group">
-            <label for="username">
+            <label for="token">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
               </svg>
-              Username
+              Reset Token
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="token"
+              name="token"
               required
-              autocomplete="username"
-              placeholder="Enter your username"
+              placeholder="Enter your reset token"
             />
           </div>
 
           <div class="form-group">
-            <label for="password">
+            <label for="new-password">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
-              Password
+              New Password
             </label>
             <div class="password-input-wrapper">
               <input
                 type="password"
-                id="password"
-                name="password"
+                id="new-password"
+                name="new-password"
                 required
-                autocomplete="current-password"
-                placeholder="Enter your password"
+                minlength="8"
+                placeholder="Enter new password (min 8 characters)"
               />
-              <button type="button" class="toggle-password" id="toggle-password" aria-label="Toggle password visibility">
+              <button type="button" class="toggle-password" data-target="new-password" aria-label="Toggle password visibility">
                 <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                   <circle cx="12" cy="12" r="3"/>
@@ -72,49 +71,60 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
             </div>
           </div>
 
-          <div class="form-options">
-            <label class="checkbox-label">
-              <input type="checkbox" id="remember" name="remember" />
-              <span>Remember me</span>
+          <div class="form-group">
+            <label for="confirm-password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Confirm Password
             </label>
-            <a href="#" class="forgot-password" id="forgot-password-link">Forgot password?</a>
+            <div class="password-input-wrapper">
+              <input
+                type="password"
+                id="confirm-password"
+                name="confirm-password"
+                required
+                minlength="8"
+                placeholder="Confirm your new password"
+              />
+              <button type="button" class="toggle-password" data-target="confirm-password" aria-label="Toggle password visibility">
+                <svg class="eye-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="password-strength" id="password-strength">
+            <div class="strength-bar">
+              <div class="strength-fill" id="strength-fill"></div>
+            </div>
+            <span class="strength-text" id="strength-text">Enter a password</span>
           </div>
 
           <button type="submit" class="btn btn-primary btn-full">
-            <span>Sign In</span>
+            <span>Reset Password</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
           </button>
 
-          <div class="form-status" id="login-status"></div>
+          <div class="form-status" id="confirm-status"></div>
         </form>
 
         <div class="login-footer">
-          <div class="divider">
-            <span>Default Credentials</span>
-          </div>
-          <div class="credentials-info">
-            <code>admin / admin123</code>
-          </div>
-          <div class="warning-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-              <line x1="12" y1="9" x2="12" y2="13"/>
-              <line x1="12" y1="17" x2="12.01" y2="17"/>
+          <a href="/admin/login" class="back-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            <span>Change the default password after first login</span>
-          </div>
+            Back to login
+          </a>
         </div>
-      </div>
-
-      <div class="back-to-site">
-        <a href="/">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          Back to website
-        </a>
       </div>
     </div>
   </main>
@@ -134,11 +144,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   .login-background {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
-      #667eea 0%,
-      #764ba2 50%,
-      #f093fb 100%
-    );
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     z-index: 0;
   }
 
@@ -156,7 +162,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     background: radial-gradient(circle, rgba(99, 102, 241, 0.8), transparent);
     top: -10%;
     left: -10%;
-    animation-delay: 0s;
   }
 
   .orb-2 {
@@ -179,20 +184,14 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   }
 
   @keyframes float {
-    0%, 100% {
-      transform: translate(0, 0) scale(1);
-    }
-    33% {
-      transform: translate(30px, -30px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
   }
 
   .login-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     position: relative;
     z-index: 1;
     animation: slideUp 0.6s ease-out;
@@ -214,9 +213,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     backdrop-filter: blur(20px);
     border-radius: 24px;
     padding: 3rem;
-    box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
@@ -324,39 +321,30 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     color: var(--color-primary);
   }
 
-  .form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .password-strength {
     margin-bottom: 1.5rem;
-    font-size: 0.9rem;
   }
 
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    color: var(--color-text);
+  .strength-bar {
+    height: 8px;
+    background: var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
   }
 
-  .checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--color-primary);
+  .strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: all var(--transition-base);
+    border-radius: 4px;
   }
 
-  .forgot-password {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all var(--transition-fast);
-  }
-
-  .forgot-password:hover {
-    text-decoration: underline;
-    color: #5558d9;
+  .strength-text {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
   }
 
   .btn-full {
@@ -411,80 +399,24 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   }
 
   .login-footer {
+    text-align: center;
     padding-top: 2rem;
     border-top: 1px solid var(--color-border);
   }
 
-  .divider {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .divider span {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .credentials-info {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .credentials-info code {
-    background: var(--color-bg-alt);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: var(--color-primary);
-    border: 1px solid var(--color-border);
-  }
-
-  .warning-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    border-radius: 10px;
-    color: #f59e0b;
-    font-size: 0.85rem;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  .warning-badge svg {
-    flex-shrink: 0;
-  }
-
-  .back-to-site {
-    text-align: center;
-    margin-top: 1.5rem;
-  }
-
-  .back-to-site a {
+  .back-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: white;
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all var(--transition-fast);
   }
 
-  .back-to-site a:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+  .back-link:hover {
+    color: var(--color-primary);
   }
 
   @media (max-width: 640px) {
@@ -501,66 +433,67 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       height: 64px;
     }
 
-    .header-icon svg {
-      width: 36px;
-      height: 36px;
-    }
-
     .login-header h1 {
       font-size: 1.75rem;
-    }
-
-    .form-options {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .login-card {
-      padding: 1.5rem;
-    }
-
-    .btn-full {
-      padding: 0.875rem 1.5rem;
-      font-size: 1rem;
     }
   }
 </style>
 
 <script>
-  function initLogin() {
-    const form = document.getElementById('login-form') as HTMLFormElement;
-    const status = document.getElementById('login-status') as HTMLDivElement;
-    const togglePassword = document.getElementById('toggle-password');
-    const passwordInput = document.getElementById('password') as HTMLInputElement;
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
+  function initPasswordReset() {
+    const form = document.getElementById('confirm-form') as HTMLFormElement;
+    const status = document.getElementById('confirm-status') as HTMLDivElement;
+    const newPasswordInput = document.getElementById('new-password') as HTMLInputElement;
+    const confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
+    const strengthFill = document.getElementById('strength-fill') as HTMLDivElement;
+    const strengthText = document.getElementById('strength-text') as HTMLSpanElement;
+    const toggleButtons = document.querySelectorAll('.toggle-password');
 
-    // Password visibility toggle
-    if (togglePassword && passwordInput) {
-      togglePassword.addEventListener('click', () => {
-        const eyeOpen = togglePassword.querySelector('.eye-open');
-        const eyeClosed = togglePassword.querySelector('.eye-closed');
+    // Password visibility toggles
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetId = (button as HTMLElement).getAttribute('data-target');
+        const input = document.getElementById(targetId!) as HTMLInputElement;
+        const eyeOpen = button.querySelector('.eye-open');
+        const eyeClosed = button.querySelector('.eye-closed');
 
-        if (passwordInput.type === 'password') {
-          passwordInput.type = 'text';
+        if (input.type === 'password') {
+          input.type = 'text';
           if (eyeOpen) (eyeOpen as HTMLElement).style.display = 'none';
           if (eyeClosed) (eyeClosed as HTMLElement).style.display = 'block';
         } else {
-          passwordInput.type = 'password';
+          input.type = 'password';
           if (eyeOpen) (eyeOpen as HTMLElement).style.display = 'block';
           if (eyeClosed) (eyeClosed as HTMLElement).style.display = 'none';
         }
       });
+    });
+
+    // Password strength indicator
+    if (newPasswordInput && strengthFill && strengthText) {
+      newPasswordInput.addEventListener('input', () => {
+        const password = newPasswordInput.value;
+        const strength = calculatePasswordStrength(password);
+
+        strengthFill.style.width = strength.percentage + '%';
+        strengthFill.style.background = strength.color;
+        strengthText.textContent = strength.text;
+        strengthText.style.color = strength.color;
+      });
     }
 
-    // Forgot password link
-    if (forgotPasswordLink) {
-      forgotPasswordLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = '/admin/reset-password';
-      });
+    function calculatePasswordStrength(password: string) {
+      let score = 0;
+      if (password.length >= 8) score += 25;
+      if (password.length >= 12) score += 25;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score += 20;
+      if (/\d/.test(password)) score += 15;
+      if (/[^a-zA-Z\d]/.test(password)) score += 15;
+
+      if (score < 40) return { percentage: score, color: '#ef4444', text: 'Weak password' };
+      if (score < 70) return { percentage: score, color: '#f59e0b', text: 'Fair password' };
+      if (score < 90) return { percentage: score, color: '#3b82f6', text: 'Good password' };
+      return { percentage: 100, color: '#10b981', text: 'Strong password' };
     }
 
     if (!form || !status) return;
@@ -569,34 +502,43 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       e.preventDefault();
 
       const formData = new FormData(form);
-      const data = {
-        username: formData.get('username'),
-        password: formData.get('password'),
-      };
+      const token = formData.get('token');
+      const newPassword = formData.get('new-password');
+      const confirmPassword = formData.get('confirm-password');
+
+      // Validate passwords match
+      if (newPassword !== confirmPassword) {
+        status.className = 'form-status error';
+        status.textContent = '✗ Passwords do not match';
+        return;
+      }
+
+      // Validate password strength
+      if ((newPassword as string).length < 8) {
+        status.className = 'form-status error';
+        status.textContent = '✗ Password must be at least 8 characters long';
+        return;
+      }
 
       try {
-        const response = await fetch('/api/admin/login', {
+        const response = await fetch('/api/admin/reset-password/confirm', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+          body: JSON.stringify({ token, newPassword }),
         });
 
         const result = await response.json();
 
         if (response.ok && result.success) {
           status.className = 'form-status success';
-          status.textContent = '✓ Login successful! Redirecting to dashboard...';
+          status.textContent = '✓ Password reset successfully! Redirecting to login...';
 
-          // Store auth token
-          localStorage.setItem('admin_token', result.token);
-
-          // Redirect to admin dashboard
           setTimeout(() => {
-            window.location.href = '/admin/dashboard';
-          }, 1000);
+            window.location.href = '/admin/login';
+          }, 2000);
         } else {
           status.className = 'form-status error';
-          status.textContent = '✗ ' + (result.error || 'Invalid credentials. Please try again.');
+          status.textContent = '✗ ' + (result.error || 'Invalid or expired token.');
         }
       } catch (error) {
         status.className = 'form-status error';
@@ -605,6 +547,5 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     });
   }
 
-  initLogin();
+  initPasswordReset();
 </script>
-
